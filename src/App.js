@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState, useEffect } from "react";
+import Header from "./components/Header";
+import SearchInput from "./components/SearchInput";
+import EmojiResults from "./components/EmojiResults";
+import filterEmoji from "./filterEmoji";
 function App() {
+  const [filteredEmoji, setFilteredEmoji] = useState([]);
+  const [emojiInput, setEmojiInput] = useState("");
+  useEffect(() => {
+    setFilteredEmoji(filterEmoji(emojiInput, 20));
+  }, [emojiInput]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <SearchInput setEmojiInput={setEmojiInput} />
+      <EmojiResults filteredEmoji={filteredEmoji} />
     </div>
   );
 }
